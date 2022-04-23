@@ -1,0 +1,8 @@
+github.com/mind1949/raft v0.0.0-20220423041057-bc1e456f32a5 h1:RcqYjXU7C169ED0RtiWxgVfJiaGbGy2NoGo/rdbgD4E=
+github.com/mind1949/raft v0.0.0-20220423041057-bc1e456f32a5/go.mod h1:RZyGkicJh8368BS16MhGgUBVp3zCxNPOm3MqHcGbTZM=
+github.com/mind1949/raft v0.0.0-20220423072410-27b77a5e00bf h1:NNnbIsqel6dB1zn8KwHh23DAZJdEY7BXNP6uDmaAZ7A=
+github.com/mind1949/raft v0.0.0-20220423072410-27b77a5e00bf/go.mod h1:RZyGkicJh8368BS16MhGgUBVp3zCxNPOm3MqHcGbTZM=
+go.etcd.io/bbolt v1.3.6 h1:/ecaJf0sk1l4l6V4awd65v2C3ILy7MSj+s/x1ADCIMU=
+go.etcd.io/bbolt v1.3.6/go.mod h1:qXsaaIqmgQH0T+OPdb99Bf+PKfBBQVAdyD6TY9G8XM4=
+golang.org/x/sys v0.0.0-20200923182605-d9f96fdee20d h1:L/IKR6COd7ubZrs2oTnTi73IhgqJ71c9s80WsQnh0Es=
+golang.org/x/sys v0.0.0-20200923182605-d9f96fdee20d/go.mod h1:h1NjWce9XRLGQEsW7wpKNCjG9DtNlClVuFLEZdDNbEs=
