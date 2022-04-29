@@ -1,7 +1,9 @@
 package rafthelper
 
 import (
+	"bytes"
 	"encoding/json"
+	"time"
 
 	"github.com/mind1949/raft"
 	bolt "go.etcd.io/bbolt"
@@ -37,7 +39,7 @@ type Log struct {
 // Get 获取 raft log 中索引为 index 的 log entry term
 func (l *Log) Get(index int) (term int, err error) {
 	err = l.db.View(func(tx *bolt.Tx) error {
-		key := itob(index)
+		key := i2b(index)
 		body := l.getBucket(tx).Get(key)
 		if body == nil {
 			return nil
@@ -74,7 +76,7 @@ func (l *Log) Last() (index, term int, err error) {
 			return nil
 		}
 
-		index = btoi(key)
+		index = b2i(key)
 		var entry raft.LogEntry
 		err := l.unmarshal(value, &entry)
 		if err != nil {
@@ -90,7 +92,8 @@ func (l *Log) Last() (index, term int, err error) {
 func (l *Log) RangeGet(i, j int) (entries []raft.LogEntry, err error) {
 	err = l.db.View(func(tx *bolt.Tx) error {
 		c := l.getBucket(tx).Cursor()
-		for k, v := c.Seek(itob(i + 1)); k != nil; k, v = c.Next() {
+		jb := i2b(j)
+		for k, v := c.Seek(i2b(i + 1)); k != nil && bytes.Compare(k, jb) <= 0; k, v = c.Next() {
 			var entry raft.LogEntry
 			err := l.unmarshal(v, &entry)
 			if err != nil {
@@ -112,7 +115,7 @@ func (l *Log) PopAfter(i int) error {
 			return err
 		}
 		for i <= last {
-			_ = bucket.Delete(itob(last))
+			_ = bucket.Delete(i2b(last))
 			last--
 		}
 		return nil
@@ -130,11 +133,12 @@ func (l *Log) Append(entries ...raft.LogEntry) error {
 		for i, entry := range entries {
 			idx := last + 1 + i
 			entry.Index = idx
+			entry.AppendTime = time.Now()
 			value, err := l.marshal(entry)
 			if err != nil {
 				return err
 			}
-			bucket.Put(itob(idx), value)
+			bucket.Put(i2b(idx), value)
 		}
 		return nil
 	})

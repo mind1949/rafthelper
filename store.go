@@ -49,7 +49,7 @@ func (s *Store) Get(key []byte) ([]byte, error) {
 
 func (s *Store) SetInt(key []byte, i int) error {
 	return s.db.Update(func(tx *bolt.Tx) error {
-		return s.getBucket(tx).Put(key, itob(i))
+		return s.getBucket(tx).Put(key, i2b(i))
 	})
 }
 
@@ -62,7 +62,7 @@ func (s *Store) GetInt(key []byte) (int, error) {
 			return nil
 		}
 
-		i = btoi(value)
+		i = b2i(value)
 		return nil
 	})
 	if err != nil {
